@@ -494,7 +494,7 @@
 			"gender": "M",
 			"source": "cepstral",
 			"arg": "David",
-			"desc": "David"
+			"desc": "David (DRUNK)"
 		},
 		"diane": {
 			"country": "US",
@@ -1918,7 +1918,7 @@
 			"gender": "F",
 			"source": "voiceforge",
 			"arg": "EvilGenius",
-			"desc": "Evil Genius"
+			"desc": "Evil Genius (ded)"
 		},
 		"frank": {
 			"country": "US",
@@ -1926,7 +1926,7 @@
 			"gender": "M",
 			"source": "voiceforge",
 			"arg": "Frank",
-			"desc": "Frank"
+			"desc": "Frank (dead)"
 		},
 		"frenchfry": {
 			"country": "US",
@@ -1934,7 +1934,7 @@
 			"gender": "M",
 			"source": "voiceforge",
 			"arg": "French-fry",
-			"desc": "French-Fry"
+			"desc": "French-Fry (dead)"
 		},
 		"gregory": {
 			"country": "US",
@@ -1942,7 +1942,7 @@
 			"gender": "M",
 			"source": "voiceforge",
 			"arg": "Gregory",
-			"desc": "Gregory"
+			"desc": "Patch wrapper"
 		},
 		"jerkface": {
 			"country": "US",
@@ -1950,7 +1950,7 @@
 			"gender": "M",
 			"source": "voiceforge",
 			"arg": "JerkFace",
-			"desc": "Jerkface"
+			"desc": "Jerkface (dead)"
 		},
 		"jerseygirl": {
 			"country": "US",
@@ -1958,7 +1958,7 @@
 			"gender": "F",
 			"source": "voiceforge",
 			"arg": "JerseyGirl",
-			"desc": "Jersey Girl"
+			"desc": "Jersey Girl (dont use)"
 		},
 		"kayla": {
 			"country": "US",
@@ -1982,7 +1982,7 @@
 			"gender": "M",
 			"source": "voiceforge",
 			"arg": "Kidaroo",
-			"desc": "Kidaroo"
+			"desc": "Kidaroo (broke)"
 		},
 		"layo": {
 			"country": "NG",
@@ -1998,7 +1998,7 @@
 			"gender": "F",
 			"source": "voiceforge",
 			"arg": "Princess",
-			"desc": "Princess"
+			"desc": "Princess (dead)"
 		},
 		"ransomnote": {
 			"country": "US",
