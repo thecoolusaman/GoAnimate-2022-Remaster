@@ -37,57 +37,69 @@ module.exports = (voiceName, text) => {
 				});
 				break;
 			}
-			case "polly": {
-				var buffers = [];
+			case "polly": { // working, stops working after some time
+				// make sure it's under the char limit
+				text = text.substring(0, 2999);
+
+				const body = new URLSearchParams({
+					msg: text,
+					lang: voice.arg,
+					source: "ttsmp3"
+				}).toString();
 				var req = https.request(
 					{
-						hostname: "pollyvoices.com",
+						hostname: "ttsmp3.com",
 						port: "443",
-						path: "/api/sound/add",
+						path: "/makemp3_new.php",
 						method: "POST",
 						headers: {
-							"Content-Type": "application/x-www-form-urlencoded",
-						},
+							"Content-Length": body.length,
+							"Content-type": "application/x-www-form-urlencoded"
+						}
 					},
 					(r) => {
-						r.on("data", (b) => buffers.push(b));
+						let buffers = [];
+						r.on("data", (d) => buffers.push(d));
 						r.on("end", () => {
-							var json = JSON.parse(Buffer.concat(buffers));
-							if (json.file) get(`https://pollyvoices.com${json.file}`).then(res);
-							else rej();
+							const json = JSON.parse(Buffer.concat(buffers).toString());
+							if (json.Error != 0) rej(json.Text);
+
+							get(json.URL)
+								.then(res)
+								.catch(rej);
 						});
+						r.on("error", rej);
 					}
 				);
-				req.write(qs.encode({ text: text, voice: voice.arg }));
+				req.write(body);
 				req.end();
 				break;
 			}
 			case "cepstral":
 			case "voiceforge": {
-				https.get("https://www.voiceforge.com/demo", (r) => {
-					const cookie = r.headers["set-cookie"];
-					var q = qs.encode({
-						voice: voice.arg,
+				https.get('https://www.cepstral.com/en/demos', r => {
+					const cookie = r.headers['set-cookie'];
+					var q = new URLSearchParams({
 						voiceText: text,
-					});
+						voice: voice.arg,
+						createTime: 666,
+						rate: 170,
+						pitch: 1,
+						sfx: 'none',
+					}).toString();
 					var buffers = [];
-					https.get(
-						{
-							host: "www.voiceforge.com",
-							path: `/demos/createAudio.php?${q}`,
-							headers: { Cookie: cookie },
-						},
-						(r) => {
-							r.on("data", (b) => buffers.push(b));
-							r.on("end", () => {
-								const html = Buffer.concat(buffers);
-								const beg = html.indexOf('id="mp3Source" src="') + 20;
-								const end = html.indexOf('"', beg);
-								const loc = html.subarray(beg, end).toString();
-								get(`https://www.voiceforge.com${loc}`).then(res).catch(rej);
-							});
-						}
-					);
+					var req = https.get({
+						host: 'www.cepstral.com',
+						path: `/demos/createAudio.php?${q}`,
+						headers: { Cookie: cookie },
+						method: 'GET',
+					}, r => {
+						r.on('data', b => buffers.push(b));
+						r.on('end', () => {
+							var json = JSON.parse(Buffer.concat(buffers));
+							get(`https://www.cepstral.com${json.mp3_loc}`).then(res).catch(rej);
+						})
+					});
 				});
 				break;
 			}
